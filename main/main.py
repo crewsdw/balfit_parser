@@ -5,13 +5,21 @@ import write as write
 import tools as tools
 
 # Path information
-linear_paths = ['1st_order/']
-nonlin_paths = ['Interactions/Normals/', 'Interactions/Normal-Roll/', 'Interactions/Side-Roll/']
+zlo_path = '../balfit_parser/Data/ZLO/'
+linear_paths = ['Data/Linear/']  # ['1st_order/']
+nonlin_paths = ['Data/Interactions/Normals/', 'Data/Interactions/Normal-Roll/', 'Data/Interactions/Side-Roll/']
 
 # Load tdms data files, first ZLO
 print("\nLoading ZLO file...")
-ZLO = read.Data(path='ZLO/', name='ZLO')
+ZLO = read.Data(path=zlo_path, name='ZLO')
 ZLO.average_all()
+
+# Zero load-off sets
+# zlo_names, zlo_signs, zlo_str_id = tools.determine_files(paths=zlo_paths)
+# print(zlo_names)
+# print(zlo_signs)
+# print(zlo_str_id)
+# quit()
 
 # Linear sets (single loads)
 print("\nDetermining linear data files from paths ", linear_paths)
@@ -28,8 +36,7 @@ linear_data = tools.read_all_files(paths=linear_paths, file_names=linear_names,
 print("\nLoading nonlinear data files...")
 nonlin_data = tools.read_all_files(paths=nonlin_paths, file_names=nonlin_names,
                                    file_str_ids=nonlin_str_id, file_signs=nonlin_signs)
-# print(nonlin_data)
-# quit()
+
 print('\nWriting BALFIT input file...')
 Writer = write.InputFile(path='', name='InputTest', zlo_file=ZLO, linear_data=linear_data, nonlin_data=nonlin_data)
                          # data_files=linear_data, str_ids=linear_str_id, signs=linear_signs)

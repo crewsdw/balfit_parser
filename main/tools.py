@@ -7,7 +7,6 @@ import read as read
 headers = ['NF1', 'NF2', 'SF1', 'SF2', 'RM', 'AF']
 
 
-# Assisting functions
 def read_all_files(paths, file_names, file_str_ids, file_signs):
     """
     Read all files from list "file_names" and adjust data (fixing headers / signs) according to str_ids and signs
@@ -103,11 +102,13 @@ def adjust_data(data_file, file_str_ids, file_sign):
     # Grab correct column and zero everything else
     target_arrays = []  # np.zeros(data_file.num_variations)  # init
     for j in range(6):
-        if np.amax(np.absolute(data_file.tared_data[j][1])) > 1:
+        if np.amax(np.absolute(data_file.tared_data[j][1])) > 10:  # check if loaded, value > zero-off readings
             target_arrays += [data_file.tared_data[j][1]]
         data_file.tared_data[j][1] = np.zeros_like(data_file.tared_data[j][1])
 
     # Set value
+    # print(data_file.tared_data)
+    # print(target_arrays)
     for idx, array in enumerate(target_arrays):
         data_file.tared_data[file_str_ids[idx]][1] = array
         # Fix sign
