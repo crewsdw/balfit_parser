@@ -94,8 +94,8 @@ def signs_and_strings(files):
 
 def adjust_data(data_file, file_str_ids, file_sign):
     """
-    Adjust Data object because columns are all screwed up...
-    :param data_file: Data object for this file
+    Adjust data object because columns are all screwed up...
+    :param data_file: data object for this file
     :param file_str_ids: string ids
     :param file_sign: numerical sign of applied load
     """

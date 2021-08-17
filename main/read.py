@@ -18,7 +18,7 @@ class Data:
         # loadings
         self.num_variations = len(self.paths)
         self.variations = [self.paths[i].split('\'')[1]
-                        for i in range(len(self.paths))]  # loadings in degrees
+                        for i in range(len(self.paths))]  # loadings types
 
         # channels
         self.channels = [self.groups[i].channels()

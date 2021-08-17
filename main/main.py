@@ -1,13 +1,15 @@
-import numpy as np
-from nptdms import TdmsFile
+# import numpy as np
+# from nptdms import TdmsFile
 import read as read
 import write as write
 import tools as tools
 
 # Path information
-zlo_path = '../balfit_parser/Data/ZLO/'
-linear_paths = ['Data/Linear/']  # ['1st_order/']
-nonlin_paths = ['Data/Interactions/Normals/', 'Data/Interactions/Normal-Roll/', 'Data/Interactions/Side-Roll/']
+zlo_path = '../data/ZLO/'
+linear_paths = ['../data/Linear/']  # ['1st_order/']
+interactions = ['Normals', 'Normal-Roll', 'Normal-Side', 'Side', 'Side-Roll', 'Axial']
+nonlin_paths = ['../data/Interactions/' + interaction + '/' for interaction in interactions]
+write_out_path = '../out/'
 
 # Load tdms data files, first ZLO
 print("\nLoading ZLO file...")
@@ -38,16 +40,16 @@ nonlin_data = tools.read_all_files(paths=nonlin_paths, file_names=nonlin_names,
                                    file_str_ids=nonlin_str_id, file_signs=nonlin_signs)
 
 print('\nWriting BALFIT input file...')
-Writer = write.InputFile(path='', name='InputTest', zlo_file=ZLO, linear_data=linear_data, nonlin_data=nonlin_data)
-                         # data_files=linear_data, str_ids=linear_str_id, signs=linear_signs)
+Writer = write.InputFile(path=write_out_path, name='Data2017', zlo_file=ZLO,
+                         linear_data=linear_data, nonlin_data=nonlin_data)
 Writer.preamble(comments=['I am a fish', 'I am a shoe'])
 Writer.file_comments(comments=['DATA ORIGIN = 3x3 Tunnel'])
 Writer.headers()
 print('Writing ZLOs...')
 Writer.write_zlo()
-print('Writing linear (single vector) loadings...')
+print('Writing single and interaction vector loadings...')
 Writer.write_data()
-print('Writing nonlinear (interactions) loadings...')
+# print('Writing nonlinear (interactions) loadings...')
 
 # Trash Bin
 # print(file_names)

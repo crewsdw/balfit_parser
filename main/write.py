@@ -64,11 +64,11 @@ class InputFile:
             writer.writerow(['FILE_TYPE', file_type])
             writer.writerow(['BALANCE_NAME', balance_name])
             writer.writerow(['DESCRIPTION', description])
-            # Data variable names
+            # data variable names
             writer.writerow('')
             writer.writerow(['; load and gage output symbols'])
             writer.writerow(['', '', '', ''] + self.var_names)
-            # Data variable units
+            # data variable units
             writer.writerow('')
             writer.writerow(['; load and gage output units'])
             writer.writerow(['', '', '', ''] + ['lbs', 'lbs', 'lbs', 'lbs', 'in-lbs', 'lbs',
@@ -85,6 +85,8 @@ class InputFile:
             writer.writerow(['; zero load-off averages'])
             writer.writerow([';', 'point id', 'series', 'orientation'] + ['', '', '', '', '', ''] + self.var_names[6:])
             for s in range(self.num_orientations - 1):
+                if float(self.orientations[s]) < 0:
+                    self.orientations[s] = int(self.orientations[s]) % 360  # if negative angle make positive
                 line = ['', 'NZ-' + str(s + 1).zfill(4), 'A', str(self.orientations[s])] + self.six_empty
                 for k in range(6):
                     line += [str(self.zlo_averages[6:][k][s])]
