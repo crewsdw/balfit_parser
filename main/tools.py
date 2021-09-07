@@ -4,6 +4,7 @@ import re  # parsing for regular expressions
 import read as read
 
 # List of possible headers
+# NF1 = N1, NF2 = N2, SF1 = S1, SF2 = S2, RM = L1, AF = A1
 headers = ['NF1', 'NF2', 'SF1', 'SF2', 'RM', 'AF']
 
 
